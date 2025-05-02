@@ -48,7 +48,7 @@ function Login() {
             </div>
           </div>
           <button className="login-btn" disabled={isPending}>
-            {isPending ? "Logging in..." : "Login"}
+            {isPending ? "Login in..." : "Login"}
           </button>
         </form>
         <span className="text-and-link">

@@ -1,5 +1,7 @@
 import "./Sidebar.scss";
 import { NavLink } from "react-router-dom";
+import { useLogout } from "../../hooks/useLogout";
+import { useSelector } from "react-redux";
 
 const navItems = [
   {
@@ -35,6 +37,15 @@ const navItems = [
 ];
 
 function Sidebar({ showNavbar, setShowNavbar }) {
+  const { logout } = useLogout();
+  const user = useSelector((state) => state.user.user);
+
+  const handleLogout = () => {
+    if (user?.uid) {
+      logout(user.uid);
+    }
+  };
+
   return (
     <div className={`Sidebar-container ${showNavbar ? "toggle-bar" : ""}`}>
       <div>
@@ -61,12 +72,17 @@ function Sidebar({ showNavbar, setShowNavbar }) {
           ))}
         </div>
       </div>
+
       <div
         onClick={() => setShowNavbar(!showNavbar)}
         className="side-logout items"
       >
         <img src="./icon-minimize-menu.svg" alt="" />
         {!showNavbar && <p>Minimize Menu</p>}
+      </div>
+      <div onClick={handleLogout} className="items">
+        <img className="logout_svg" src="./logout.svg" alt="logout" />
+        {!showNavbar && <p>Logout</p>}
       </div>
     </div>
   );
